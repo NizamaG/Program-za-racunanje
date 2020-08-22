@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+	<title>Program za aritmetičke operacije</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body{
+			font-family: Georgia, sans-serif;
+			padding: 0;
+			margin: 0;
+			background: #FE8C53;
+			color: #FB4C0F;
+		}
+		#wrapper {
+			width: 1200px;
+			margin: 100px auto 0;
+			background: #5A0F09;
+			height: 500px;
+			display: grid;
+			padding: 20px;
+			grid-template-rows: repeat(3, auto);
+			grid-template-columns: repeat(4,290px);
+			grid-gap: 20px;
+			border-radius: 50px;
+		}
+		
+		.box {
+			height: 150px;
+			text-align: center;
+			font-size: 1.5em;
+		}
+	
+		h1 {
+			grid-column: 1/5;
+			padding: 0;
+			margin: 0 0 20px 0;
+			text-align: center;
+			height: 20%;
+		}
+
+		.box.result {
+			grid-column: 1/5;
+			color: #FB4C0F;
+			font-weight: bold;
+			font-size: 2em;
+		}
+
+		.result .rez {
+			color:white;
+			font-weight: bolder;
+		}
+		
+		.red {
+			color:white;
+		}
+		.box input , .box select{
+			height:60px;
+			width: 111px;
+			background:#FE8C53;
+			color: black;
+			text-align: center;
+			font-size: 1.3em;
+			outline:none;
+			border: 2px solid black;
+			border-radius: 15px;
+		}
+
+		.box select {
+			width: 60px;
+			padding: 10px;
+		}
+		button {
+			height:60px;
+			width: 140px;
+			margin: 50px auto;
+			text-align: center;
+			background:#FE8C53;
+			border:2px solid black;
+			font-weight: bold;
+			font-size: 0.9em;
+			outline: none;
+			border-radius: 5px;
+			padding: 10px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<h1>Program za obavljanje osnovnih aritmetičkih operacija</h1>
+		<div class="box">
+			<p>Unesite prvi broj:</p>
+			<input value="" type="number" name="prviBroj" id="prviBroj">
+		</div>
+		<div class="box">
+			<p>Izaberite operaciju!</p>
+			<select id="operator">
+				<option value="plus">+</option>
+				<option value="minus">-</option>
+				<option value="times">&times;</option>
+				<option value="divide">&divide;</option>
+			</select>
+			
+		</div>
+		<div class="box">
+			<p>Unesite drugi broj:</p>
+			<input value="" type="number" name="drugiBroj" id="drugiBroj">
+			
+		</div>
+		<div class="box">
+			<button id="racunaj">IZRAČUNAJ</button>
+		</div>
+		<div class="box result">
+			<p id="message"></p>
+		</div>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+		var rez=document.getElementById('racunaj');
+		var prvi="";
+		var drugi="";
+		var znak =document.getElementById('operator');
+		rez.onclick= function() {
+			var odabran =znak.options[znak.selectedIndex].value;
+			prvi = document.getElementById('prviBroj').value;
+			drugi =document.getElementById('drugiBroj').value;
+			
+			var ispis=document.getElementById("message");
+
+			function sabiranje(a,x,b){
+				var rezultat=parseInt(a)+parseInt(b);
+				ispis.innerHTML=a+" + "+b+" = <span class='rez'> "+rezultat + "</span>";
+
+			}
+
+			function oduzimanje(a,x,b){
+				var rezultat=parseInt(a)-parseInt(b);
+				ispis.innerHTML=a+" - "+b+" = <span class='rez'> "+rezultat + "</span>";
+			}
+
+			function dijeljenje(a,x,b){
+				if (parseInt(b)===0)
+				{
+					document.getElementById("message").innerHTML="<span class='red'>Dijeljenje nulom nije moguće!!!</span>";
+				}
+					else
+					{
+						
+						if ((parseInt(a)%parseInt(b))>0)
+						{
+							var rezultat=parseInt(a)/parseInt(b);
+							cijeliBroj=parseInt(rezultat);
+							ostatak=parseInt(a)%parseInt(b);
+							ispis.innerHTML=a+" &divide; "+b+" = <span class='rez'> "+cijeliBroj + "</span> sa ostatkom <span class='rez'>"+ ostatak+"</span>,<br> <span style='font-size:1em'>odnosno "+ rezultat+"</span>";
+						} 
+							else
+							{
+								var rezultat=parseInt(a)/parseInt(b);
+								ispis.innerHTML=a+" &divide; "+b+" = <span class='rez'> "+rezultat + "</span>";
+							}
+						
+					}
+			}
+
+			function mnozenje(a,x,b){
+				var rezultat=parseInt(a)*parseInt(b);
+				ispis.innerHTML=a+" &times; "+b+" = <span class='rez'> "+rezultat + "</span>";
+			}
+
+				if (prvi==="" && drugi==="")
+				{
+					document.getElementById("message").innerHTML="<span class='red'>Unesite brojeve!!!</span>";
+				}
+					else if (prvi==="" && drugi!=="")
+					{
+						document.getElementById("message").innerHTML="<span class='red'>Unesite prvi broj!!!</span>";
+					}
+						else if(prvi!=="" && drugi==="")
+						{
+							document.getElementById("message").innerHTML="<span class='red'>Unesite drugi broj!!!</span>";
+						}
+							else
+							{
+								switch(odabran)
+								{
+									case 'divide':
+									dijeljenje(prvi,operator,drugi);
+									break;
+									
+									case 'times':
+									mnozenje(prvi,operator,drugi);
+									break;
+
+									case 'plus':
+									sabiranje(prvi,operator,drugi);
+									break;
+
+									case 'minus':
+									oduzimanje(prvi,operator,drugi);
+
+									break;
+									default:
+										document.getElementById("message").innerHTML="<span class='red'>Izaberite računsku operaciju!!!</span>";
+									break;
+								}
+							}
+				
+			
+		};
+
+
+	</script>
+</body>
+</html>
